@@ -4,18 +4,21 @@
 * 일시 : 2016년 1월 5일(목) ~ 2016년 3월 30일 (매주 목요일)
 * 시간 : 19:30 ~ 21:30
 * 인원 : 8명 ~ 10명
+* 스터디 방식 : 3인 1조가 되어 내용 정리 및 연습문제 설명 
 
-# Plan
+# 각 챕터별 리딩 담당자 # Plan
 
-* 1 주차 (1월 5일): Chapter1 What is functional programming?
-* 2 주차 (1월 12일): Chapter2 Getting started with functional programming in scala
-* 3 주차 (1월 19일): Chapter3 Functional data structures
-* 4 주차 (2월 2일): Chapter4 Handling errors without exceptions
-* 5 주차 (2월 9일): Chapter5 Strictness and laziness
-* 6 주차 (2월 16일): Chapter6 purely functional state
-* 7 주차 (2월 23일): Chapter7 Purely functional parallelism
-* 8 주차 (3월 2일): Chapter8 Property-based testing
-* 9 주차 (3월 9일): Chapter9 Parser combinators
-* 10 주차 (3월 16일): Chapter10 Monoids
-* 11 주차 (3월 23일): Chapter11 Monads
-* 12 주차 (3월 30일): Chapter12 Applicative and Traversable functors
+| No | subject | Date | 담당자 | 비고 |
+|----|----|----|----|----|
+| 1 | What is functional programming? | 1월 5일 | 김경범님 |  |
+| 2 | Getting started with functional programming in scala | 1월 12일 | 김경범님, 김진억님, 김지수님 |  |
+| 3 | Functional data structures | 1월 19일 | 김준섭님, 남석현님, 정진태 |  |
+| 4 | Handling errors without exceptions | 2월 2일 | 이창언님, 조동호님, 고재도님 |  |
+| 5 | Strictness and laziness | 2월 9일 |  |  |
+| 6 | purely functional state | 2월 16일 |  |  |
+| 7 | Purely functional parallelism | 2월 23일 |  |  |
+| 8 | Property-based testing | 3월 2일 |  |  |
+| 9 | Parser combinators | 3월 9일 |  |  |
+| 10 | Monoids | 3월 16일 |  |  |
+| 11 | Monads | 3월 23일 |  |  |
+| 12 | Applicative and Traversable functors | 3월 30일 |  |  |
