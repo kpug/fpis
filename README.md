@@ -1,4 +1,4 @@
-# fpis
+# Functional Programming in scala
 
 * 책 스터디 : http://www.yes24.com/24/Goods/8522959?Acode=1
 * 일시 : 2016년 1월 5일(목) ~ 2016년 3월 30일 (매주 목요일)
