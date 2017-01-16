@@ -12,8 +12,8 @@
 |----|----|----|----|----|
 | 1 | What is functional programming? | 1월 5일 | 김경범님 |  |
 | 2 | Getting started with functional programming in scala | 1월 12일 | 김경범님, 김진억님, 김지수님 |  |
-| 3 | Functional data structures | 1월 19일 | 김준섭님, 남석현님, 정진태 |  |
-| 4 | Handling errors without exceptions | 2월 2일 | 이창언님, 조동호님, 고재도님 |  |
+| 3 | Functional data structures | 1월 19일 | 김준섭님, 남석현님, 고재도님 |  |
+| 4 | Handling errors without exceptions | 2월 2일 | 이창언님, 조동호님, 정진태님 |  |
 | 5 | Strictness and laziness | 2월 9일 |  |  |
 | 6 | purely functional state | 2월 16일 |  |  |
 | 7 | Purely functional parallelism | 2월 23일 |  |  |
