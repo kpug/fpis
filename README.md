@@ -18,7 +18,7 @@
 | 6 | purely functional state | 2월 16일 | 김경범님, 고재도님, 김진억님 |  |
 | 7 | Purely functional parallelism | 2월 23일 | 양원석님, 조동호님, 이창언님 |  |
 | 8 | Property-based testing | 3월 2일 |김소연님, 김준섭님, 고재도님 |  |
-| 9 | Parser combinators | 3월 9일 | 김진억님, 양원석님,  |  |
+| 9 | Parser combinators | 3월 9일 | 김진억님, 양원석님, 김경범님 |  |
 | 10 | Monoids | 3월 16일 | 남석현님, 김지수님, 이창언님 |  |
 | 11 | Monads | 3월 23일 |  |  |
 | 12 | Applicative and Traversable functors | 3월 30일 |  |  |
