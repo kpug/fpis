@@ -12,14 +12,14 @@
 |----|----|----|----|----|
 | 1 | What is functional programming? | 1월 5일 | 김경범님 |  |
 | 2 | Getting started with functional programming in scala | 1월 12일 | 김경범님, 김진억님, 김지수님 |  |
-| 3 | Functional data structures | 1월 19일 | 김준섭님, 남석현님, 정진태 |  |
-| 4 | Handling errors without exceptions | 2월 2일 | 이창언님, 조동호님, 고재도님 |  |
-| 5 | Strictness and laziness | 2월 9일 |  |  |
-| 6 | purely functional state | 2월 16일 |  |  |
-| 7 | Purely functional parallelism | 2월 23일 |  |  |
-| 8 | Property-based testing | 3월 2일 |  |  |
-| 9 | Parser combinators | 3월 9일 |  |  |
-| 10 | Monoids | 3월 16일 |  |  |
+| 3 | Functional data structures | 1월 19일 | 김준섭님, 남석현님, 고재도님 |  |
+| 4 | Handling errors without exceptions | 2월 2일 | 이창언님, 조동호님, 정진태님 |  |
+| 5 | Strictness and laziness | 2월 9일 | 김지수님, 김소연님, 정진태님 |  |
+| 6 | purely functional state | 2월 16일 | 김경범님, 고재도님, 김진억님 |  |
+| 7 | Purely functional parallelism | 2월 23일 | 양원석님, 조동호님, 이창언님 |  |
+| 8 | Property-based testing | 3월 2일 |김소연님, 김준섭님, 고재도님 |  |
+| 9 | Parser combinators | 3월 9일 | 김진억님, 양원석님, 김경범님 |  |
+| 10 | Monoids | 3월 16일 | 남석현님, 김지수님, 이창언님 |  |
 | 11 | Monads | 3월 23일 |  |  |
 | 12 | Applicative and Traversable functors | 3월 30일 |  |  |
 
