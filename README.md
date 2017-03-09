@@ -20,8 +20,8 @@
 | 8 | Property-based testing | 3월 2일 |김소연님, 양원석님, 김경범님 |  |
 | 9 | Parser combinators | 3월 9일 | 김진억님, 양원석님, 김경범님 |  |
 | 10 | Monoids | 3월 16일 | 남석현님, 김지수님, 이창언님 |  |
-| 11 | Monads | 3월 23일 |  |  |
-| 12 | Applicative and Traversable functors | 3월 30일 |  |  |
+| 11 | Monads | 3월 23일 | 김경범님, 김소연님, 남석현님 |  |
+| 12 | Applicative and Traversable functors | 3월 30일 | 조동호님, 이창언님, 김준섭님 |  |
 
 
 # Code Example
