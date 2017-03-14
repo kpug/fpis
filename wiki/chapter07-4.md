@@ -1,0 +1,262 @@
+7.4 API의 대수
+------------
+
+원하는 연산의 형식 서명만 작성한 후 그 형식을 따라가다 보면 구현에 도달하는 경우가 많다. 이는 대수 방정식을 단순화할 때 하는 것과 비슷한 자연스러운 추론이다. 이런 때 우리는 API를 하나의 **대수(algebra)**, 즉 일단의 **법칙(law)** 또는 참이라고 가정하는 속성(property)들을 가진 추상적인 연산 집합으로 간주하고, 그 대수에 정의된 게임 규칙에 따라 그냥 형식적으로 기호를 조작하면서 문제를 풀어나간다.
+
+API가 준수하리라 기대하는 법칙들을 공식화하여 정밀하게 다듬어 보면, 비공식적인 추론으로는 드러나지 않았을 설계상의 선택들이 좀 더 명확해진다.
+
+### 7.4.1 map에 관한 법칙
+
+법칙의 선택에 따른 **결과(consequence)**
+
+- 연산에 부여할 수 있는 의미에 제약이 생긴다.
+- 선택 가능한 구현 방식이 결정된다.
+- 참일 수 있는 다른 속성들에도 영향이 미친다.
+
+```scala
+map(unit(1))(_ + 1) == unit(2)
+```
+
+이 검례는 `unit(1)`에 `_ + 1` 함수를 사상한 것이 `unit(2)`와 동등함을 의미한다. _(법칙은 이처럼 성립하리라고 기대하는 **항등식(identity)**으로부터 시작하는 경우가 흔하다.)_
+
+함수를 일반화할 수 있듯이, 법칙도 일반화할 수 있다. 앞의 법칙을 다음과 같이 일반화할 수 있다.
+
+```scala
+map(unit(x))(f) == unit(f(x))
+```
+
+이 법칙은 `unit`의 구현에 자신이 받은 것을 넘겨주기만 해야 한다는 제약을 가한다. 좀 더 구체적으로 말하면, `map`과 `unit`의 구현에서 down casting이나 type casting을 허용하지 않는다.
+
+어떤 함수를 정의할 때 그보다 더 간단한 함수들, 즉 **한 가지 일만 하는 함수**들을 이용해서 정의하려는 것과 아주 비슷하게, 어떤 법칙을 정의할 때에는 **한 가지 사실만 말하는** 더 간단한 법칙들을 이용해서 정의할 수 있다.
+
+이 법칙의 `f`를 항등 함수(identity function, `def id[A](a: A): A = a`)로 치환하고 양변을 단순화하면 다음과 같은 더 간단한 법칙이 나온다.
+
+```scala
+map(unit(x))(f)  == unit(f(x))  // 초기 법칙
+map(unit(x))(id) == unit(id(x)) // f를 항등 함수로 치환
+map(unit(x))(id) == unit(x)     // 단순화
+map(y)(id)       == y           // 양변에서 unit(x)를 y로 치환
+```
+
+간단한 새 법칙은 오직 `map`에 관해서만 말하며 `unit`의 언급은 군더더기였음을 알려준다.
+
+`map`은 단지 함수 `f`를 `y`의 결과에 적용할 뿐이다. `map(y)(id) == y`라고 할 때 반대 방향의 치환들을 통해서 원래의, 좀 더 복잡한 법칙으로 돌아갈 수 있다. 즉, 만일 `map(y)(id) == y`라면 반드시 `map(unit(x))(f) == unit(f(x))`도 참이어야 한다. 
+
+map의 [매개변수성(parametricity)](https://en.wikipedia.org/wiki/Parametricity) 덕분에 이 2차 법칙 또는 정리가 공짜로 생겼다는 점에서, 이를 [공짜 정리(free theorem)]((http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf))라고 부르기도 한다.
+
+###### □ 연습문제 7.7
+
+> **어려움**: `map(y)(id) == y`라고 할 때, `map(map(y)(g))(f) == map(y)(f compose g)`라는 공짜 정리가 성립한다. (이를 **사상 융합(map fusion)**이라고도 부르며, 일종의 최적화로 사용할 수 있다. 즉, 두 번째 사상을 계산하기 위해 개별적인 병렬 계산을 띄우는 대신, 그것을 첫 번째 사상으로 접을 수 있다.) 이를 증명할 수 있는가? 논문 ["Theorems for Free!"](http://ttic.uchicago.edu/~dreyer/course/papers/wadler.pdf)를 직접 읽어 보면 공짜 정리의 '요령'을 좀 더 잘 이해할 수 있을 것이다.
+> 
+> ```
+> map(map(y)(g))(f) == map(g(y))(f)
+> map(g(y))(f) == f(g(y))
+> f(g(y)) == (f compose g)(y)
+> (f compose g)(y) == map(y)(f compose g)
+> ```
+> 
+> See [second-functor-law](https://github.com/quchen/articles/blob/master/second_functor_law.md), also [type-inhabitants](https://gist.github.com/pchiusano/444de1f222f1ceb09596)
+
+### 7.4.2 fork에 관한 법칙
+
+좀 더 강한 속성의 예로, fork가 병렬 계산의 결과에 영향을 미치지 말아야 한다는 속성을 생각해 보자.
+
+```scala
+fork(x) == x
+```
+
+이전의 구현이 이 속성을 실제로 만족함은 명백하며, 이것이 `fork(x)`는 `x`와 동일한 일을 수행하되, 주 스레드와는 개별적인 논리적 스레드에서 비동기적으로 수행해야 한다는 우리의 기대와 부합하는 바람직한 속성임도 명백하다.
+
+### 7.4.3 법칙 깨기: 미묘한 버그 하나
+
+그럼 실제로 디버거의 관점에서 법칙을 깨보자. 우리는 **모든** `x`와 `ExecutorService`에 대해 `fork(x) == x`라고 기대한다.
+
+###### □ 연습문제 7.8
+
+> **어려움**: [Executors](http://docs.oracle.com/javase/7/docs/api/java/util/concurrent/Executors.html)의 여러 정적 메서드들을 살펴보면서 ExecutorService의 서로 다른 구현들을 파악하라. 그런 다음 잠시 물러나서 독자의 fork 구현을 다시 고찰하고, 독자의 구현에서 법칙이 성립하지 않는 반례를 찾아보거나, 성립함을 스스로 납득하라.
+>
+> hint: There is a problem is with fixed size thread pools. What happens if the thread pool is bounded to be of exactly size 1?
+
+###### 코드에 관한 법칙과 증명이 중요한 이유
+
+> 함수형 프로그래밍에서는 공통의 기능성을 추출하고 **합성(composition)**을 통해 재사용 가능한 일반적 구성요소를 만들기가 쉬우며, 그런 일이 당연시된다. 부수 효과는 합성 능력을 해친다. 좀 더 일반화하면, 그러한 구성요소(함수이든 아니든)를 **블랙박스<sup>black box</sup>**로 취급하지 못하게 만드는 숨겨진 또는 부차적인 가정이 존재하면 합성이 어렵거나 불가능해진다.
+> 
+> API에 의미 있고 추론에 도움이 되는 법칙들을 갖춘 대수를 부여하면 클라이언트가 API를 더 유용하게 사용할 수 있다. 더 나아가서, API의 작성자가 API의 객체들을 블랙박스로 취급하는 것이 가능하다.
+
+내부적으로 고정된 크기의 스레드 풀을 사용하면 교착(deadlock)에 빠지게 된다.
+
+```scala
+val a = lazyUnit(42 + 1)
+val S = Executors.newFixedThreadPool(1)
+println(Par.equal(S)(a, fork(a)))
+```
+
+현재의 fork 구현
+
+```scala
+def fork[A](a: => Par[A]): Par[A] =
+  es => es.submit(new Callable[A] {
+    def call = a(es).get // 다른 Callable 안에 있는 한 Callable의 결과를 기다린다.
+  })
+```
+
+이 코드는 먼저 Callable을 제출하고, **그 Callable 안에서** 또 다른 Callable을 ExecutorService에 제출한다. 바깥쪽 Callable이 제출되면 스레드 풀의 스레드 하나가 할당된다. 스레드는 또 다른 Callable을 제출하고, 그 결과를 기다리지만 스레드 풀에는 또 다른 Callable을 실행할 스레드가 남아 있지 않다. 따라서 둘은 서로 기다리게 되며, 결과적으로 교착이 발생한다.
+
+###### □ 연습문제 7.9
+
+> **어려움**: 현재의 fork 구현에서는 모든 고정 크기 스레드 풀이 교착으로 이어질 수 있음을 보여라.
+> 
+> answer: For a thread pool of size 2, `fork(fork(fork(x)))` will deadlock, and so on. Another, perhaps more interesting example is `fork(map2(fork(x), fork(y)))`. In this case, the outer task is submitted first and occupies a thread waiting for both `fork(x)` and `fork(y)`. The `fork(x)` and `fork(y)` tasks are submitted and run in parallel, except that only one thread is available, resulting in deadlock. 
+
+##### 반례 발견 시의 선택
+
+- 법칙이 성립하도록 구현을 수정
+- 법칙이 성립하는 조건들을 좀 더 명시적으로 밝히도록 법칙을 정련
+
+##### 고정 크기 스레드 풀에 대해 잘 작동하도록 fork의 구현 변경
+
+```scala
+def fork[A](fa: => Par[A]): Par[A] =
+  es => fa(es)
+```
+
+변경한 구현으로 교착은 방지할 수 있으나 이제는 개별적인 논리적 스레드를 띄워서 `fa`를 평가하지 않게 된다. 즉, `fork(hugeComputation)(es)`는 주 스레드에서 `hugeComputation`을 실행한다. 이는 애초에 `fork`의 호출로 피하고자 했던 상황이며 이 구현은 최종적인 해결 방법이 되지 못한다.
+
+다만 변경된 구현도 계산의 인스턴스화를 실제로 필요한 시점까지 미룬다는 점에서 유용할 수 있으므로, 좀 더 적합한 이름인 `delay`로 변경한다.
+
+```scala
+def delay[A](fa: => Par[A]): Par[A] =
+  es => fa(es)
+```
+
+### 7.4.4 행위자를 이용한 완전 비차단 Par 구현
+
+##### 현재 표현의 본질적 문제
+
+- `Future`의 `get` 메서드를 호출하지 않고서는 `Future`에서 값을 **꺼낼** 수 없다.
+- `get` 메서드 메서드를 호출하면 현재 스레드(호출한 스레드)의 실행이 차단된다.
+
+`Par`의 표현이 이런 식으로 자원을 흘리지 않도록 하려면 반드시 **비차단(non-blocking)** 방식이어야 한다. 즉, `fork`와 `map2`의 구현이 현재 스레드를 차단하는 메서드를 절대로 호출하지 말아야 한다.
+
+#### 기본 착안
+
+`Par`를 `java.util.concuttent.Future`로 바꾸어서 값을 **꺼내는** 대신, **적당한 때에 호출되는 콜백을 등록할 수 있는** 우리만의 `Future`를 도입한다.
+
+```scala
+sealed trait Future[A] {
+  // apply 메서드는 fpinsala.parallelism 패키지의 private 멤버이다.
+  // 즉, 오직 그 패키지 안의 코드에서만 이 메서드에 접근할 수 있다.
+  private[parallelism] def apply(k: A => Unit): Unit
+}
+
+type Par[+A] = ExecutorService => Future[A]
+```
+
+새로운 `Future`는 `A` 형식의 결과를 산출하는 함수 `k`를 받고 그 결과를 이용해서 어떠한 효과를 수행하는 `apply` 메서드를 제공한다. 이런 종류의 함수를 **계속 함수(continuation)** 또는 **콜백(callback)** 함수라고 부른다.
+
+###### 순수 API에 국소 부수 효과 사용
+
+> 지금 정의한 `Future` 형식은 `A => Unit`에서 짐작할 수 있듯이 부수 효과를 가진다. 부수 효과로 인해 함수형 프로그래밍에서 벗어나게 되는게 아닐까 생각할 수 있지만 이는 **부수 효과를 순수 함수적 API의 구현 세부사항으로 사용한다는 일반적인 기법**을 적용한 것으로, 해당 부수 효과들이 `Par`를 사용하는 사용자에게는 **보이지 않기** 때문에 여전히 함수형 프로그래밍으로 볼 수 있다.
+
+##### Par를 위한 run 구현
+
+```scala
+def run[A](es: ExecutorService)(p: Par[A]): A = {
+  val ref = new AtomicReference[A]
+  val latch = new CountDownLatch(1)
+  p(es) { a => ref.set(a); latch.countDown }
+  latch.await
+  ref.get
+}
+```
+
+`latch`가 풀리길 기다리는 동안 `run`을 호출한 스레드가 차단되는데, 그렇지 않게 구현하는 것은 불가능하다.
+
+##### Par를 생성하는 예: unit
+
+```scala
+def unit[A](a: A): Par[A] =
+  es = new Future[A] {
+    def apply(cb: A => Unit): Unit = 
+      cb(a) // 그냥 값을 콜백 함수에 전달한다. 
+            // ExecutorService는 필요하지 않음을 주목할 것.
+  }
+```
+
+##### Par를 생성하는 예: fork
+
+```scala
+def fork[A](a: => Par[A]): Par[A] = 
+  es => new Future[A] {
+    def apply(cb: A => Unit): Unit = 
+      eval(es)(a(es)(cb))
+  }
+
+// 어떤 ExecutorService를 이용해서 계산을 비동기적으로 평가하기 위한 보조 함수
+def eval(es: ExecutorService)(r: => Unit): Unit = 
+  es.submit(new Callable[Unit] { def call = r })
+```
+
+`fork`가 돌려준 `Future`는 이름으로 전달된 인수 `a`의 평가를 위한 작업을 띄운다. 그 작업은 `a`를 실제로 평가, 호출해서 하나의 `Future[A]`를 산출하며, 그 `Future`가 결과 `A`를 산출했을 때 호출될 콜백 함수를 등록한다.
+
+##### Par를 생성하는 예: map2
+
+```scala
+def map2[A, B, C](a: Par[A], b: Par[B])(f: (A, B) => C): Par[C]
+```
+
+`map2`는 두 `Par` 인수를 병렬로 실행해야 하는데 그 과정에서 몇 가지 경쟁 조건(race condition)이 발생할 여지가 있으며 `java.util.concurrent`의 저수준 기본수단들만으로는 정확한 비차단 구현이 어렵다.
+
+#### 간략한 행위자 소개
+
+- 흔히 Actor로 대표되는 하나의 동시적 프로세스
+- **메시지(message)**를 받았을 때에만 스레드를 점유
+- 여러 스레드가 동시에 하나의 행위자에 메시지를 보낼 수 있지만, 행위자는 그 메시지들을 오직 한 번에 하나씩만 처리
+- 여러 스레드가 접근해야 하는 까다로운 코드를 작성할 때 유용하다.
+
+> 행위자 구현은 많이 있으며 스칼라 표준 라이브러리의 `scala.actors.Actor`도 그 중 하나이지만 여기에서는 단순함을 위해 [최소한의 구현](https://github.com/fpinscala/fpinscala/blob/master/answers/src/main/scala/fpinscala/parallelism/Actor.scala)을 직접 만들어서 사용한다.
+
+#### 행위자를 이용한 map2 구현
+
+```scala
+def map2[A, B, C](pa: Par[A], pb: Par[B])(f: (A, B) => C): Par[C] =
+  es => new Future[C] {
+    def apply(cb: C => Unit): Unit = {
+      // 두 개의 변이 가능 var가 두 개의 결과를 저장하는데 쓰인다.
+      var ar: Option[A] = None
+      var br: Option[B] = None
+      
+      // 두 결과를 기다렸다가 f로 결합해서 cb에 넘겨주는 행위자.
+      val combiner = Actor[Either[A, B]](es) {
+        // 만일 A 결과가 먼저 오면 그것을 ar에 담아두고 B를 기다린다.
+        // B 결과를 이미 받았고 이제 A 결과가 왔다면, 
+        // 두 결과로 f를 호출해서 C를 얻고 그것을 콜백 함수 cb에 전달한다.
+        case Left(a) => br match {
+          case None => ar = Some(a)
+          case Some(b) => eval(es)(cb(f(a, b)))
+        }
+        
+        // 마찬가지로, 만일 B가 먼저 오면 그것을 br에 담아두고 A를 기다린다.
+        // A 결과를 이미 받았고 이제 B 결과가 왔다면, 
+        // 두 결과로 f를 호출해서 C를 얻고 그것을 콜백 함수 cb에 전달한다.
+        case Right(b) => ar match {
+          case None => br = Some(b)
+          case Some(a) => eval(es)(cb(f(a, b)))
+        }
+      }
+      
+      pa(es)(a => combiner ! Left(a)
+      pb(es)(b => combiner ! Right(b))
+    }
+  }
+```
+
+###### □ 연습문제 7.10
+
+> **어려움**: 현재의 비차단 표현은 오류를 전혀 처리하지 않는다. 만일 계산이 어느 지점에서 예외를 던지면 run 구현의 latch는 횟수를 더 이상 감소하지 않으며, 예외는 그냥 묻혀버린다. 이를 바로잡을 수 있을까?
+> 
+> hint: Try adding a second continuation argument to `Future.apply`, which takes an error handler.
+> 
+> answer: We give a fully fleshed-out solution in the `Task` data type in the code for Chapter 13.
+
+이번 절의 목적은 **법칙들이 중요함**을 보여주는 것이다. 라이브러리 설계를 고민할 때, 법칙들은 문제를 다른 각도에서 보게 한다. 만일 이번 장에서 API의 법칙들을 적어보지 않았다면, 첫 구현의 스레드 자원 누수 문제를 한참 후에야 발견했을 것이다.
