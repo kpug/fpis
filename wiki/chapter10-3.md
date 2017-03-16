@@ -71,9 +71,7 @@ scala> val m3 = M.op(m1, m2)
 m3: Map[String,Map[String,Int]] = Map(o1 -> Map(i1 -> 1, i2 -> 5))
 ```
 
-10.6.2 모노이드 합성을 이용한 순회 융합
----
-(Using composed monoids to fuse traversals)
+10.6.2 모노이드 합성을 이용한 순회 융합(Using composed monoids to fuse traversals)
 ---
 - 여러 모노이드를 하나로 합성할 수 있다는 사실은 자료구조를 접을 때 여러 계산을 동시에 수행할 수 있음을 뜻한다.
 
