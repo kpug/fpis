@@ -21,7 +21,7 @@
 | 9 | Parser combinators | 3월 9일 | 김진억님, 양원석님 |  |
 | 10 | Monoids | 3월 16일 | 남석현님, 김지수님, 이창언님 |  |
 | 11 | Monads | 3월 23일 | 김경범님, 김소연님, 남석현님 |  |
-| 12 | Applicative and Traversable functors | 3월 30일 | 조동호님, 이창언님 |  |
+| 12 | Applicative and Traversable functors | 3월 30일 | 조동호님, 이창언님, 양원석님 |  |
 
 
 # Code Example
