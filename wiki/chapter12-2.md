@@ -17,7 +17,7 @@ trait Applicative[F[_]] extends Functor[F] {
     	// 따라서 unit(())는 그러한 가짜 값 ()로 unit을 호출하는 것에 해당한다.
         map2(fa, unit(()))((a, _) => f(a))
 
-	// traverse의 정의는 이전과 동일하다.
+     // traverse의 정의는 이전과 동일하다.
 ￼￼￼ 	def traverse[A,B](as: List[A])(f: A => F[B]): F[List[B]]
         as.foldRight(unit(List[B]()))((a, fbs) => map2(f(a), fbs)(_ :: _))
 }
@@ -31,7 +31,7 @@ trait Applicative[F[_]] extends Functor[F] {
 
 ```
 trait Monad[F[_]] extends Applicative[F] {
-	//Monad의 최소한의 구현은 반드시 unit을 구현해야 하며, flatMap 또는 join과 map을 재정의해야 한다.
+    //Monad의 최소한의 구현은 반드시 unit을 구현해야 하며, flatMap 또는 join과 map을 재정의해야 한다.
     def flatMap[A,B](fa: F[A])(f: A => F[B]): F[B] = join(map(fa)(f))
 
     def join[A](ffa: F[F[A]]): F[A] = flatMap(ffa)(fa => fa) 
