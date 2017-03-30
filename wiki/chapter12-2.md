@@ -18,7 +18,7 @@ trait Applicative[F[_]] extends Functor[F] {
         map2(fa, unit(()))((a, _) => f(a))
 
      // traverse의 정의는 이전과 동일하다.
-￼￼￼ 	def traverse[A,B](as: List[A])(f: A => F[B]): F[List[B]]
+￼￼￼     def traverse[A,B](as: List[A])(f: A => F[B]): F[List[B]]
         as.foldRight(unit(List[B]()))((a, fbs) => map2(f(a), fbs)(_ :: _))
 }
 ```
