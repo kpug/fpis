@@ -9,7 +9,8 @@
 ### 참조 투명성
 
 ```
-만일 모든 프로그램 p에 대해 표현식 e의 모든 출현(occurrence)을 e의 평가 결과로 치환해도 p의 의미에 아무런 영향을 미치지 않는다면, 그 표현식 e는 참조에 투명하다(referentially transparent).
+만일 모든 프로그램 p에 대해 표현식 e의 모든 출현(occurrence)을 e의 평가 결과로 치환해도 p의 의미에 아무런 영향을 미치지 않는다면,
+그 표현식 e는 참조에 투명하다(referentially transparent).
 ```
 
 ### 순수성
