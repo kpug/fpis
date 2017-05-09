@@ -1,28 +1,29 @@
 # Functional Programming in scala
 
 * 책 스터디 : http://www.yes24.com/24/Goods/8522959?Acode=1
-* 일시 : 2016년 1월 5일(목) ~ 2016년 3월 30일 (매주 목요일)
+* 일시 : 2016년 1월 5일(목) ~ 2016년 4월 27일 (매주 목요일)
 * 시간 : 19:30 ~ 21:30
 * 인원 : 8명 ~ 10명
-* 스터디 방식 : 3인 1조가 되어 내용 정리 및 연습문제 설명 
+* 스터디 방식 : 3인 1조가 되어 내용 정리 및 연습문제 설명
 
-# Plan
+# Wiki
 
-| No | subject | Date | 담당자 | 비고 |
-|----|----|----|----|----|
-| 1 | What is functional programming? | 1월 5일 | 김경범님 |  |
-| 2 | Getting started with functional programming in scala | 1월 12일 | 김경범님, 김진억님, 김지수님 |  |
-| 3 | Functional data structures | 1월 19일 | 김준섭님, 남석현님, 고재도님 |  |
-| 4 | Handling errors without exceptions | 2월 2일 | 이창언님, 조동호님, 정진태님 |  |
-| 5 | Strictness and laziness | 2월 9일 | 김지수님, 김소연님, 정진태님 |  |
-| 6 | purely functional state | 2월 16일 | 김경범님, 고재도님, 김진억님 |  |
-| 7 | Purely functional parallelism | 2월 23일 | 김준섭님, 조동호님, 이창언님 |  |
-| 8 | Property-based testing | 3월 2일 |김소연님, 양원석님, 김경범님 |  |
-| 9 | Parser combinators | 3월 9일 | 김진억님, 양원석님 |  |
-| 10 | Monoids | 3월 16일 | 남석현님, 김지수님, 이창언님 |  |
-| 11 | Monads | 3월 23일 | 김경범님, 김소연님, 남석현님 |  |
-| 12 | Applicative and Traversable functors | 3월 30일 | 조동호님, 이창언님, 양원석님 |  |
+[1. What is functional programming?](https://github.com/kpug/fpis/blob/master/wiki/chapter1.asc)
+[2. Getting started with functional programming in scala](https://github.com/kpug/fpis/blob/master/wiki/chapter2.asc)
+[3. Functional data structures](https://github.com/kpug/fpis/blob/master/wiki/chapter3.asc)
+[4. Handling errors without exceptions](https://github.com/kpug/fpis/blob/master/wiki/chapter4.asc)
+[5. Strictness and laziness](https://github.com/kpug/fpis/blob/master/wiki/chapter5.asc)
+[6. purely functional state](https://github.com/kpug/fpis/blob/master/wiki/chapter6.asc)
+[7. Purely functional parallelism](https://github.com/kpug/fpis/blob/master/wiki/chapter7.asc)
+[8. Property-based testing](https://github.com/kpug/fpis/blob/master/wiki/chapter8.asc)
+[9. Parser combinators](https://github.com/kpug/fpis/blob/master/wiki/chapter9.asc)
+[10. Monoids](https://github.com/kpug/fpis/blob/master/wiki/chapter10.asc)
+[11. Monads](https://github.com/kpug/fpis/blob/master/wiki/chapter11.asc)
+[12. Applicative and Traversable functors](https://github.com/kpug/fpis/blob/master/wiki/chapter12.asc)
 
+[13. External effects and I/O](https://github.com/kpug/fpis/blob/master/wiki/chapter13.asc)
+[14. Local effects and mutable state](https://github.com/kpug/fpis/blob/master/wiki/chapter14.asc)
+[15. Stream processing and incremental I/O](https://github.com/kpug/fpis/blob/master/wiki/chapter15.asc)
 
 # Code Example
 
