@@ -74,7 +74,7 @@ int sum = IntStream.rangeClosed(1, 10).reduce(0, (a, b) -> a+b)
 
 우리가 보통 프로그램을 배우면서 처음 배우는 함수는 아래와 같다.
 
-코드2.1 프로그래밍에서 사용하는 함수
+##### 코드2.1 프로그래밍에서 사용하는 함수
 
 ````java
 public static void main(String[] args){
@@ -85,7 +85,7 @@ public static void main(String[] args){
 우리가 앞으로 마음속에 품어야 할 것은 이런 함수가 아니라 바로 수학(mathematics)에서의 함수이다. 수학적 의미의 함수는 "첫 번째 집합의 임의의 한 원소를 두 번째 집합의 오직 한 원소에 대응시키는 대응 관계이다."이다.
 
 
-그림2.1 함수 기호, X는 정의역 Y는 공역, f(x)의 함수를 사상하였을 때 나오는 결과의 집합을 치역(; D, C)이라 한다.
+##### 그림2.1 함수 기호, X는 정의역 Y는 공역, f(x)의 함수를 사상하였을 때 나오는 결과의 집합을 치역(; D, C)이라 한다.
 
 ![image](https://cloud.githubusercontent.com/assets/4495200/26612150/cc981708-45ed-11e7-9395-f3515eb054ab.png)
 
@@ -112,7 +112,7 @@ public static void main(String[] args){
 
 이제 참조 투명성(referential transparency)에 대해서 살펴보자. 우선 간단하게 더하기 함수에 대해서 살펴보자.
 
-코드 2.2 더하기 함수
+##### 코드 2.2 더하기 함수
 
 ````scala
 def sum(a: Int, B: Int): Int = {
@@ -258,7 +258,7 @@ Functor는 보통 펑터라고 부르며, 프로그래머 세계에서는 함수
 함수형 프로그래밍 언어들로 개발 하다가 보면 여러 map함수를 만날 수 있다. map은 사상한다는 의미로 보통 List에서는 아래와 같이 사용할 수 있다.
 
 
-코드5.1 List의 map 함수
+##### 코드5.1 List의 map 함수
 
 ````bash
 scala> val list = (1 to 10).toList
@@ -270,7 +270,7 @@ res0: List[Int] = List(3, 6, 9, 12, 15, 18, 21, 24, 27, 30)
 
 이렇게 자료구조에 사용할 수도 있고, Option이나 Future에서도 map을 사용할 수 있다.
 
-코드5.2 Option의 map 함수
+##### 코드5.2 Option의 map 함수
 
 ````bash
 scala> val option = Option(5)
@@ -280,7 +280,7 @@ scala> option.map(x => x * 5)
 res4: Option[Int] = Some(25)
 ````
 
-코드5.3 Future의 map 함수
+##### 코드5.3 Future의 map 함수
 
 ````bash
 scala> import scala.concurrent._
