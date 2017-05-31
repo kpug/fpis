@@ -150,6 +150,7 @@ Set과 Magma, Semigroup, 그리고 Monoid는 모두 추상대수학에서 나온
 그렇다면, 모노이드는 무엇일까? Wikipedia에서는 모노이드에 대해 다음과 같이 설명하고 있다.
 
 > 추상대수학에서 모노이드는 항등원을 갖는, 결합 법칙을 따르는 이항 연산을 갖춘 대수 구조이다. - wikipedia
+
 Set, Magma, Semigroup과 연관시켜보면, Semigroup이 항등원을 가질 때 그걸 모노이드라고 할 수 있다. 정확히는, 결합 법칙과 항등 법칙을 합쳐서 모노이드 법칙이라고 부르며 모노이드 법칙을 만족하는 대수적 구조를 모노이드라고 한다.
 
 모노이드를 Scala trait으로 표현하면 다음과 같다. (개념 설명을 위한 예시로서 실제로 scalaz 등에서 구현된 내용과는 다를 수 있다.)
@@ -425,15 +426,16 @@ flatMap(m)(unit) == m
 
 첫번째 파라미터에 컨테이너 타입 m을 적용하고,  두번째 파라미터에 unit을 적용했을 경우, m과 동일해야 한다. 
 
-
-
 ### 5.2. Monad의 이점
 
 #### 5.2.1 Monad는 Functor의 확장
 
 unit과 flatMap을 이용해 다음과 같이 Functor의 map을 구현할 수 있다.
 
+````scala
 def map[A, B] (ma: F[A])(f: A => B): F[B] = flatMap(ma)(a => unit(f(a)))
+````
+
 Moand는 Functor의 map 구현을 제공할 수 있으므로 Functor를 확장할 수 있다. 그러므로 모든 Monad는 Functor라고 할 수 있지만, 모든 Functor가 Monad인 것은 아니다.
 
 #### 5.2.2 unit과 flatMap을 용해 이미 구현된 유용한 함수들
